@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const fontSizes = [
   {
@@ -56,21 +56,7 @@ const themes = [
   },
 ];
 
-const Settings = () => {
-  const storedSettings = JSON.parse(localStorage.getItem("settings"));
-
-  const initialSettings = {
-    "--background-color": "#fff",
-    "--background-light": "#fff",
-    "--primary-color": "rgb(255, 0, 86)",
-    "--shadow-color": "rgba(0,0,0,0.2)",
-    "--text-color": "#0A0A0A",
-    "--text-light": "#575757",
-    "--font-size": "16px",
-    "--animation-speed": 1,
-  };
-
-  const [settings, setSettings] = useState(storedSettings || initialSettings);
+const Settings = ({ settings, setSettings }) => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [primaryColor, setPrimaryColor] = useState(
     primaryColors.findIndex((color) => color === settings["--primary-color"])
@@ -122,14 +108,6 @@ const Settings = () => {
     setSettings(_settings);
     localStorage.setItem("settings", JSON.stringify(_settings));
   }
-
-  useEffect(() => {
-    const root = document.documentElement;
-
-    for (let key in settings) {
-      root.style.setProperty(key, settings[key]);
-    }
-  }, [settings]);
 
   return (
     <div>
@@ -212,6 +190,11 @@ const Settings = () => {
       </div>
     </div>
   );
+};
+
+Settings.propTypes = {
+  settings: PropTypes.object,
+  setSettings: PropTypes.func,
 };
 
 export default Settings;
