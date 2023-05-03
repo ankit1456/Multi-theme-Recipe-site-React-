@@ -71,7 +71,6 @@ const Settings = () => {
   };
 
   const [settings, setSettings] = useState(storedSettings || initialSettings);
-
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   const [primaryColor, setPrimaryColor] = useState(
     primaryColors.findIndex((color) => color === settings["--primary-color"])
